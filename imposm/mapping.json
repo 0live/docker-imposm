@@ -1,0 +1,811 @@
+{
+  "areas": {
+    "area_tags": ["buildings", "landuse", "leisure", "natural", "aeroway"],
+    "linear_tags": ["highway", "barrier"]
+  },
+  "tags": {
+    "load_all": true
+  },
+  "tables": {
+    "ong_administrative_boundary_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "integer",
+          "name": "admin_level",
+          "key": "admin_level"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "boundary": ["administrative"],
+        "refugee": ["yes"],
+        "place": ["refugee_camp", "refugee_settlement", "IDP_camp"],
+        "amenity": ["refugee_site"]
+      }
+    },
+    "ong_administrative_boundary_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "integer",
+          "name": "admin_level",
+          "key": "admin_level"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "boundary": ["administrative"],
+        "refugee": ["yes"],
+        "amenity": ["refugee_site"]
+      }
+    },
+    "ong_shelters_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "building": ["yes", "tent", "hut"],
+        "social_facility": ["shelter"]
+      }
+    },
+    "ong_shelters_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "building": ["yes", "tent", "hut"],
+        "social_facility": ["shelter"]
+      }
+    },
+    "ong_administration_security_facilities_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "entrance": ["yes"],
+        "amenity": ["social_facility", "fire_station", "police", "prison"],
+        "social_facility": ["outreach", "group_home"],
+        "office": ["__any__"],
+        "building": ["warehouse"],
+        "landuse": ["military"],
+        "aeroway": ["helipad", "aerodrome"],
+        "highway": ["bus_stop"]
+      }
+    },
+    "ong_administration_security_facilities_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "entrance": ["yes"],
+        "amenity": ["social_facility", "fire_station", "police", "prison"],
+        "social_facility": ["outreach", "group_home"],
+        "office": ["__any__"],
+        "building": ["warehouse"],
+        "landuse": ["military"],
+        "aeroway": ["helipad", "aerodrome"],
+        "highway": ["bus_stop"]
+      }
+    },
+    "ong_wash_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "man_made": [
+          "storage_tank",
+          "water_tap",
+          "water_well",
+          "rainwater",
+          "water_works",
+          "pipeline"
+        ],
+        "amenity": [
+          "drinking_water",
+          "fountain",
+          "water_point",
+          "toilets",
+          "shower",
+          "lavoir",
+          "waste_basket",
+          "waste_disposal",
+          "recycling"
+        ],
+        "drinking_water": ["__any__"],
+        "bottle": ["__any__"],
+        "fountain": ["__any__"],
+        "drinking_water:refill": ["__any__"],
+        "natural": ["spring"],
+        "landuse": ["landfill"]
+      }
+    },
+    "ong_wash_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "man_made": [
+          "storage_tank",
+          "water_tap",
+          "water_well",
+          "rainwater",
+          "water_works",
+          "pipeline"
+        ],
+        "amenity": [
+          "drinking_water",
+          "fountain",
+          "water_point",
+          "toilets",
+          "shower",
+          "lavoir",
+          "waste_basket",
+          "waste_disposal",
+          "recycling"
+        ],
+        "drinking_water": ["__any__"],
+        "bottle": ["__any__"],
+        "fountain": ["__any__"],
+        "drinking_water:refill": ["__any__"],
+        "natural": ["spring"],
+        "landuse": ["landfill"]
+      }
+    },
+    "ong_health_facilities_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "amenity": ["hospital", "clinic", "doctors", "pharmacy"]
+      }
+    },
+    "ong_health_facilities_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "amenity": ["hospital", "clinic", "doctors", "pharmacy"]
+      }
+    },
+    "ong_social_facilities_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "leisure": ["sports_centre"],
+        "amenity": [
+          "social_facility",
+          "marketplace",
+          "restaurant",
+          "community_centre",
+          "kitchen"
+        ],
+        "social_facility": [
+          "outreach",
+          "group_home",
+          "workshop",
+          "distribution",
+          "shelter"
+        ],
+        "building": ["retail"],
+        "industrial": ["slaughterhouse"],
+        "landuse": ["farmland", "cemetary", "industrial"]
+      }
+    },
+    "ong_social_facilities_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "leisure": ["sports_centre"],
+        "amenity": [
+          "social_facility",
+          "marketplace",
+          "restaurant",
+          "community_centre",
+          "kitchen"
+        ],
+        "social_facility": [
+          "outreach",
+          "group_home",
+          "workshop",
+          "distribution",
+          "shelter"
+        ],
+        "building": ["retail"],
+        "industrial": ["slaughterhouse"],
+        "landuse": ["farmland", "cemetary", "industrial"]
+      }
+    },
+    "gen_roads": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "mapping_key",
+          "name": "class",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "linestring",
+      "filters": {
+        "reject": {
+          "area": ["yes"]
+        }
+      },
+      "mappings": {
+        "railway": {
+          "mapping": {
+            "railway": ["__any__"]
+          }
+        },
+        "roads": {
+          "mapping": {
+            "man_made": ["pier", "groyne"],
+            "highway": ["__any__"]
+          }
+        }
+      }
+    },
+    "gen_landuse": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "natural": ["water", "wetland", "wood"],
+        "landuse": ["__any__"]
+      }
+    },
+    "gen_river": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "linestring",
+      "mapping": {
+        "waterway": ["stream", "river"]
+      }
+    },
+    "gen_education_facilities_point": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "amenity": ["kindergarden", "school", "university"]
+      }
+    },
+    "gen_education_facilities_polygon": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "polygon",
+      "mapping": {
+        "amenity": ["kindergarden", "school", "university"]
+      }
+    },
+    "gen_worship": {
+      "columns": [
+        {
+          "type": "id",
+          "name": "osm_id",
+          "key": null
+        },
+        {
+          "type": "geometry",
+          "name": "geometry",
+          "key": null
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "key": "name"
+        },
+        {
+          "type": "string",
+          "name": "desc",
+          "key": "description"
+        },
+        {
+          "type": "mapping_value",
+          "name": "type",
+          "key": null
+        },
+        {
+          "type": "hstore_tags",
+          "name": "tags"
+        }
+      ],
+      "type": "point",
+      "mapping": {
+        "amenity": ["place_of_worship"]
+      }
+    }
+  }
+}

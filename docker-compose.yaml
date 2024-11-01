@@ -11,6 +11,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - geostudio-postgis:/var/lib/postgresql/data  # Nom du volume personnalisé
+      - ./postgis/init_hstore.sql:/docker-entrypoint-initdb.d/init_hstore.sql  # Ajout du script d'initialisation
+
     ports:
       - "5432:5432"
     healthcheck:
@@ -24,6 +26,10 @@ services:
       context: ./imposm
       args:
         PBF_URLS: ${PBF_FILES}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_HOST: ${POSTGRES_HOST}
     container_name: geostudio_imposm
     depends_on:
       postgis:

@@ -1,0 +1,8 @@
+{
+    "cachedir": "/srv/imposm/imposm_cache",
+    "connection": "postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}",
+    "mapping": "/srv/imposm/config/mapping.json",
+    "diffdir": "/srv/imposm/imposm_diff",
+    "replication_url": "https://planet.openstreetmap.org/replication/hour/",
+    "replication_interval": "1h"
+}

@@ -1,0 +1,1 @@
+imposm import -appendcache -config /srv/imposm/config/config.json -read /srv/imposm/data/martinique-latest.osm.pbf -write -limitto /srv/imposm/data/clip.geojson -diff -optimize

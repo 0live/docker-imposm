@@ -20,15 +20,9 @@ RUN wget https://github.com/omniscale/imposm3/releases/download/v0.14.0/imposm-0
 RUN mkdir -p /srv/imposm/data /srv/imposm/config /srv/imposm/logs /srv/imposm/imposm_cache /srv/imposm/imposm_diff /srv/imposm/scripts
 
 # Copier les fichiers nécessaires dans l'image
-COPY clip.geojson /srv/imposm/data/clip.geojson
-COPY mapping.json /srv/imposm/config/mapping.json
-COPY /scripts/download_pbf.sh /srv/imposm/scripts/download_pbf.sh
-COPY /scripts/init_db.sh /srv/imposm/scripts/init_db.sh
-RUN chmod +x /srv/imposm/scripts/download_pbf.sh \
-&& chmod +x /srv/imposm/scripts/init_db.sh
-
-# Copier le template de config.json
-COPY config.template.json /srv/imposm/config/config.template.json
+COPY /scripts/*.sh /srv/imposm/scripts/
+COPY /files/*.json /files/*.geojson /srv/imposm/config/
+RUN chmod +x /srv/imposm/scripts/*.sh
 
 # Remplacer les placeholders dans config.template.json et créer config.json, puis supprimer le template
 RUN envsubst < /srv/imposm/config/config.template.json > /srv/imposm/config/config.json && \

@@ -3,7 +3,7 @@
 # Chemin vers le dossier contenant les fichiers .pbf
 DATA_DIR="/srv/imposm/data"
 CONFIG_FILE="/srv/imposm/config/config.json"
-CLIP_FILE="$DATA_DIR/clip.geojson"
+CLIP_FILE="/srv/imposm/config/clip.geojson"
 
 # Initialiser une variable pour déterminer le premier fichier
 first_file=true

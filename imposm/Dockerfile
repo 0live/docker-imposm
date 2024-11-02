@@ -7,6 +7,8 @@ ARG POSTGRES_USER
 ARG POSTGRES_PASSWORD
 ARG POSTGRES_DB
 ARG POSTGRES_HOST
+ARG REPLICATION_URL
+ARG REPLICATION_INTERVAL
 
 # Installer wget, envsubst et les dépendances nécessaires
 RUN apt-get update && apt-get install -y bash && apt-get install -y wget gettext && apt-get clean
@@ -21,7 +23,7 @@ RUN mkdir -p /srv/imposm/data /srv/imposm/config /srv/imposm/logs /srv/imposm/im
 
 # Copier les fichiers nécessaires dans l'image
 COPY /scripts/*.sh /srv/imposm/scripts/
-COPY /files/*.json /files/*.geojson /srv/imposm/config/
+COPY /files/*.json /files/*.yaml /files/*.geojson /srv/imposm/config/
 RUN chmod +x /srv/imposm/scripts/*.sh
 
 # Remplacer les placeholders dans config.template.json et créer config.json, puis supprimer le template

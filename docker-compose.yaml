@@ -1,18 +1,13 @@
-# docker-compose.yml
-version: '3.8'
+version: '0.1'
 
 services:
   postgis:
     image: postgis/postgis:16-master  # Nom personnalisé de l'image
     container_name: geostudio_postgis
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+    env_file: .env
     volumes:
       - geostudio-postgis:/var/lib/postgresql/data  # Nom du volume personnalisé
       - ./postgis/init_hstore.sql:/docker-entrypoint-initdb.d/init_hstore.sql  # Ajout du script d'initialisation
-
     ports:
       - "5432:5432"
     healthcheck:
@@ -30,18 +25,24 @@ services:
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         POSTGRES_DB: ${POSTGRES_DB}
         POSTGRES_HOST: ${POSTGRES_HOST}
+        REPLICATION_URL: ${REPLICATION_URL}
+        REPLICATION_INTERVAL: ${REPLICATION_INTERVAL}
     container_name: geostudio_imposm
     depends_on:
       postgis:
         condition: service_healthy
-    environment:
-      - PBF_URLS=${PBF_FILES}
-      - PGHOST=postgis
-      - PGUSER=${POSTGRES_USER}
-      - PGPASSWORD=${POSTGRES_PASSWORD}
-      - PGDATABASE=${POSTGRES_DB}
+    env_file: .env
     volumes:
       - geostudio-imposm:/data  # Nom du volume personnalisé
+    
+  openmaptiles-import:
+    image: "openmaptiles/import-data:${TOOLS_VERSION}"
+    env_file: .env
+    depends_on:
+      postgis:
+        condition: service_healthy
+    profiles:
+      - import #N'est pas lancé avec docker compose up
 
 volumes:
   geostudio-postgis:  # Définition des volumes

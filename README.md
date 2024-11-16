@@ -26,6 +26,9 @@ For now the 2 only manual steps are:
 
 Next steps:
 - Check OpenMapTiles styles for maps -> Is it following the postgis schema?
+ -> Nope, need another solution. 
+    -> Generate OMT MBTiles for basemap + specific OSM schema if needed or just a 2nd database for geographic data
+    -> Does Martin can serve two sources in the same time? Can I use OMT styles with mbtiles served by Martin?
 - Tegola: How to configure lists of sources/layers + Pregenerate tiles0 + dockerize
 - Maputnik: How to open with a specific config file?
 - Sprites: library for sprites generation

@@ -1,48 +1,46 @@
 version: '0.1'
 
 services:
-  postgis:
-    image: postgis/postgis:16-master  # Nom personnalisé de l'image
-    container_name: geostudio_postgis
-    env_file: .env
-    volumes:
-      - geostudio-postgis:/var/lib/postgresql/data  # Nom du volume personnalisé
-      - ./postgis/init_hstore.sql:/docker-entrypoint-initdb.d/init_hstore.sql  # Ajout du script d'initialisation
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # postgis:
+  #   image: postgis/postgis:16-master  # Nom personnalisé de l'image
+  #   container_name: geostudio_postgis
+  #   env_file: .env
+  #   volumes:
+  #     - geostudio-postgis:/var/lib/postgresql/data  # Nom du volume personnalisé
+  #     - ./postgis/init_hstore.sql:/docker-entrypoint-initdb.d/init_hstore.sql  # Ajout du script d'initialisation
+  #   ports:
+  #     - "5432:5432"
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
-  imposm:
+  # imposm:
+  #   build:
+  #     context: ./imposm
+  #     args:
+  #       PBF_URLS: ${PBF_FILES}
+  #       POSTGRES_USER: ${POSTGRES_USER}
+  #       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #       POSTGRES_DB: ${POSTGRES_DB}
+  #       POSTGRES_HOST: ${POSTGRES_HOST}
+  #       REPLICATION_URL: ${REPLICATION_URL}
+  #       REPLICATION_INTERVAL: ${REPLICATION_INTERVAL}
+  #   container_name: geostudio_imposm
+  #   depends_on:
+  #     postgis:
+  #       condition: service_healthy
+  #   env_file: .env
+  #   volumes:
+  #     - geostudio-imposm:/data  # Nom du volume personnalisé
+  
+  martin:
     build:
-      context: ./imposm
-      args:
-        PBF_URLS: ${PBF_FILES}
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        POSTGRES_DB: ${POSTGRES_DB}
-        POSTGRES_HOST: ${POSTGRES_HOST}
-        REPLICATION_URL: ${REPLICATION_URL}
-        REPLICATION_INTERVAL: ${REPLICATION_INTERVAL}
-    container_name: geostudio_imposm
-    depends_on:
-      postgis:
-        condition: service_healthy
-    env_file: .env
-    volumes:
-      - geostudio-imposm:/data  # Nom du volume personnalisé
-    
-  openmaptiles-import:
-    image: "openmaptiles/import-data:${TOOLS_VERSION}"
-    env_file: .env
-    depends_on:
-      postgis:
-        condition: service_healthy
-    profiles:
-      - import #N'est pas lancé avec docker compose up
+      context: ./martin
+    container_name: geostudio_martin
+    ports:
+      - "3000:3000"
 
 volumes:
   geostudio-postgis:  # Définition des volumes

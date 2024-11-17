@@ -1,21 +1,36 @@
 version: '0.1'
 
 services:
-  # postgis:
-  #   image: postgis/postgis:16-master  # Nom personnalisé de l'image
-  #   container_name: geostudio_postgis
-  #   env_file: .env
-  #   volumes:
-  #     - geostudio-postgis:/var/lib/postgresql/data  # Nom du volume personnalisé
-  #     - ./postgis/init_hstore.sql:/docker-entrypoint-initdb.d/init_hstore.sql  # Ajout du script d'initialisation
-  #   ports:
-  #     - "5432:5432"
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+  postgis:
+    image: postgis/postgis:16-master  # Nom personnalisé de l'image
+    container_name: geostudio_postgis
+    env_file: .env
+    volumes:
+      - geostudio-postgis:/var/lib/postgresql/data  # Nom du volume personnalisé
+      - ./postgis/init_hstore.sql:/docker-entrypoint-initdb.d/init_hstore.sql  # Ajout du script d'initialisation
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  martin:
+    # image: ghcr.io/maplibre/martin:v0.13.0
+    # restart: unless-stopped
+    build:
+      context: ./martin
+    container_name: geostudio_martin
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgis:5432/${POSTGRES_DB}
+    depends_on:
+      postgis:
+        condition: service_healthy
 
+  
   # imposm:
   #   build:
   #     context: ./imposm
@@ -34,14 +49,6 @@ services:
   #   env_file: .env
   #   volumes:
   #     - geostudio-imposm:/data  # Nom du volume personnalisé
-  
-  martin:
-    build:
-      context: ./martin
-    container_name: geostudio_martin
-    ports:
-      - "3000:3000"
-
 volumes:
   geostudio-postgis:  # Définition des volumes
   geostudio-imposm:

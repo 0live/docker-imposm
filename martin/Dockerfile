@@ -24,3 +24,19 @@ EXPOSE 3000
 
 # Commande de démarrage
 CMD ["./martin", "tiles.mbtiles"]
+
+
+# Utiliser l'image officielle de Martin comme base
+# FROM ghcr.io/maplibre/martin:latest
+
+# # Définir le répertoire de travail
+# WORKDIR /app
+
+# # Copier les fichiers de configuration si présents (optionnel)
+# # Placez votre fichier config.yaml dans ./martin/config dans votre projet
+# COPY config/config.yaml /config/config.yaml
+# COPY tiles.mbtiles /app/tiles.mbtiles
+
+# # Commande par défaut pour lancer Martin
+# CMD ["--config", "/config/config.yaml"]
+# # CMD ["./martin", "tiles.mbtiles"]

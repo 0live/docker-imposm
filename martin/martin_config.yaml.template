@@ -1,0 +1,22 @@
+postgres:
+  connection_string: postgresql://olive:test@postgis:5432/test_db
+  auto_publish: true
+  tables:
+    test:
+      schema: public
+      table: test
+      srid: 4326
+      geometry_column: geom
+      bounds:
+      - 19.21311110577395
+      - 41.46544052277248
+      - 19.506349896569333
+      - 41.69134492361973
+      geometry_type: POLYGON
+      properties:
+        id: int4
+        name: varchar
+  functions: {}
+mbtiles:
+  sources:
+    tiles: /app/tiles.mbtiles

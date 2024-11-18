@@ -1,42 +1,43 @@
+# Étape 1 : Construire Martin à partir des sources avec Rust
+FROM rust:slim AS builder
+
+# Installer les dépendances nécessaires pour la compilation
+RUN apt-get update && apt-get install -y \
+    curl \
+    libssl-dev \
+    pkg-config \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installer Martin via Cargo
+RUN cargo install martin
+
+# Étape 2 : Créer une image légère pour exécuter Martin
 FROM debian:bookworm-slim
 
-# Installer les dépendances nécessaires
+# Installer gettext-base (pour envsubst) et autres dépendances nécessaires pour l'exécution
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    tar \
     ca-certificates \
+    gettext-base \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Définir le répertoire de travail
 WORKDIR /app
 
+# Copier le fichier MBTiles dans l'image
 COPY tiles.mbtiles /app/tiles.mbtiles
 
-# Télécharger et extraire le binaire de Martin
-RUN curl -L -O https://github.com/maplibre/martin/releases/latest/download/martin-x86_64-unknown-linux-gnu.tar.gz && \
-    tar -xzf martin-x86_64-unknown-linux-gnu.tar.gz && \
-    chmod +x ./martin && \
-    rm martin-x86_64-unknown-linux-gnu.tar.gz
+# Copier le fichier template du fichier de configuration
+COPY martin_config.yaml.template /app/martin_config.yaml.template
 
-# Exposer le port utilisé par Martin
-EXPOSE 3000
+# Copier le binaire Martin depuis l'étape de compilation
+COPY --from=builder /usr/local/cargo/bin/martin /usr/local/bin/martin
 
-# Commande de démarrage
-CMD ["./martin", "tiles.mbtiles"]
+# Remplacer les variables d'environnement dans le fichier de configuration au build
+RUN envsubst < /app/martin_config.yaml.template > /app/martin_config.yaml
 
-
-# Utiliser l'image officielle de Martin comme base
-# FROM ghcr.io/maplibre/martin:latest
-
-# # Définir le répertoire de travail
-# WORKDIR /app
-
-# # Copier les fichiers de configuration si présents (optionnel)
-# # Placez votre fichier config.yaml dans ./martin/config dans votre projet
-# COPY config/config.yaml /config/config.yaml
-# COPY tiles.mbtiles /app/tiles.mbtiles
-
-# # Commande par défaut pour lancer Martin
-# CMD ["--config", "/config/config.yaml"]
-# # CMD ["./martin", "tiles.mbtiles"]
+# Exécuter Martin en utilisant le fichier de configuration généré
+# CMD exec /usr/local/bin/martin
+# CMD ["martin", "tiles.mbtiles"]
+CMD ["martin", "--config", "/app/martin_config.yaml"]

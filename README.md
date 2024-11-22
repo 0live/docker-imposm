@@ -20,6 +20,7 @@ Add OpenMatiles as a free Basemap
 docker run -it --rm -p 8888:80 ghcr.io/maplibre/maputnik:main
 
 - En cours: Configuration de Martin pour servir les données MbTiles et postgis
+http://localhost:3000/tiles/{z}/{x}/{y}
 
 - To see: Merge OpenMapTiles styles with local style + same for sprites
 

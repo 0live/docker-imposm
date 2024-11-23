@@ -31,6 +31,12 @@
     "open_zoomstack": {
       "type": "vector",
       "url": "https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/data/vector/open-zoomstack/config.json"
+    },
+    "test_postgis": {
+      "type": "vector",
+      "tiles": [
+        "http://localhost:3000/test/{z}/{x}/{y}"
+      ]
     }
   },
   "sprite": "https://openmaptiles.github.io/dark-matter-gl-style/sprite",
@@ -67,6 +73,15 @@
       "paint": {
         "fill-antialias": false,
         "fill-color": "rgb(27 ,27 ,29)"
+      }
+    },
+    {
+      "id": "test_zone",
+      "type": "fill",
+      "source": "test_postgis",
+      "source-layer": "test",
+      "paint": {
+        "fill-color": "rgba(229, 11, 11, 1)"
       }
     },
     {
@@ -292,7 +307,7 @@
       "paint": {
         "fill-antialias": true,
         "fill-color": "rgb(10,10,10)",
-        "fill-outline-color": "rgba(252, 252, 255, 1)"
+        "fill-outline-color": "rgba(130, 5, 47, 1)"
       }
     },
     {

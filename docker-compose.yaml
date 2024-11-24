@@ -46,6 +46,18 @@ services:
     depends_on:
       postgis:
         condition: service_healthy
+  
+  fastapi:
+    build:
+      context: ./fastapi
+    ports:
+      - "80:80"
+    volumes:
+      - ./fastapi/app/:/code/app/
+    container_name: geostudio_fastapi
+    depends_on:
+      postgis:
+        condition: service_healthy
 
   
   # imposm:

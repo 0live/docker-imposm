@@ -16,45 +16,47 @@ services:
       timeout: 5s
       retries: 5
   
-  martin:
-    # image: ghcr.io/maplibre/martin:v0.13.0
-    # restart: unless-stopped
-    build:
-      context: ./martin
-    container_name: geostudio_martin
-    ports:
-      - "3000:3000"
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgis:5432/${POSTGRES_DB}
-    volumes:
-      - ./martin/tiles.mbtiles:/app/tiles.mbtiles:ro
-    depends_on:
-      postgis:
-        condition: service_healthy
+  # martin:
+  #   # image: ghcr.io/maplibre/martin:v0.13.0
+  #   # restart: unless-stopped
+  #   build:
+  #     context: ./martin
+  #   container_name: geostudio_martin
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=${POSTGRES_DB}
+  #     - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgis:5432/${POSTGRES_DB}
+  #   volumes:
+  #     - ./martin/tiles.mbtiles:/app/tiles.mbtiles:ro
+  #   depends_on:
+  #     postgis:
+  #       condition: service_healthy
   
-  maputnik:
-    build:
-      context: ./maputnik
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./maputnik/:/app/
-    container_name: geostudio_maputnik
-    depends_on:
-      postgis:
-        condition: service_healthy
+  # maputnik:
+  #   build:
+  #     context: ./maputnik
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./maputnik/:/app/
+  #   container_name: geostudio_maputnik
+  #   depends_on:
+  #     postgis:
+  #       condition: service_healthy
   
   fastapi:
     build:
       context: ./fastapi
     ports:
-      - "80:80"
+      - "8000:8000"
     volumes:
       - ./fastapi/app/:/code/app/
     container_name: geostudio_fastapi
+    environment:
+      - PYTHONPATH=/code/app
     depends_on:
       postgis:
         condition: service_healthy
@@ -78,6 +80,7 @@ services:
   #   env_file: .env
   #   volumes:
   #     - geostudio-imposm:/data  # Nom du volume personnalisé
+      
 volumes:
   geostudio-postgis:  # Définition des volumes
   geostudio-imposm:
